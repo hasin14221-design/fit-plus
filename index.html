@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIT+ | مدیریت باشگاه</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Tahoma,Arial,sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    color:#17202a;
+}
+
+button,input,select,textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.hidden{
+    display:none!important;
+}
+
+.login-page{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:linear-gradient(135deg,#111827,#2563eb);
+}
+
+.login-box{
+    width:100%;
+    max-width:420px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 20px 60px #0005;
+}
+
+.logo{
+    text-align:center;
+    font-size:32px;
+    font-weight:bold;
+    color:#2563eb;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#777;
+    margin-bottom:25px;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    outline:none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:#2563eb;
+}
+
+.primary-btn{
+    width:100%;
+    border:0;
+    padding:13px;
+    border-radius:10px;
+    background:#2563eb;
+    color:white;
+    font-weight:bold;
+}
+
+.primary-btn:hover{
+    background:#1d4ed8;
+}
+
+.error{
+    color:#dc2626;
+    margin-bottom:12px;
+    text-align:center;
+}
+
+.app{
+    min-height:100vh;
+}
+
+.sidebar{
+    position:fixed;
+    right:0;
+    top:0;
+    bottom:0;
+    width:250px;
+    background:#111827;
+    color:white;
+    padding:20px 12px;
+    overflow:auto;
+}
+
+.sidebar-title{
+    font-size:25px;
+    font-weight:bold;
+    text-align:center;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.nav-btn{
+    width:100%;
+    padding:13px;
+    margin-bottom:7px;
+    border:0;
+    border-radius:10px;
+    background:transparent;
+    color:#d1d5db;
+    text-align:right;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+    background:#2563eb;
+    color:white;
+}
+
+.logout{
+    margin-top:20px;
+    background:#dc2626;
+    color:white;
+}
+
+.main{
+    margin-right:250px;
+    padding:25px;
+}
+
+.topbar{
+    background:white;
+    padding:18px 22px;
+    border-radius:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    box-shadow:0 3px 15px #0000000d;
+}
+
+.page-title{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.user-info{
+    color:#555;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 3px 15px #0000000d;
+}
+
+.card-title{
+    color:#777;
+    margin-bottom:10px;
+}
+
+.card-number{
+    font-size:28px;
+    font-weight:bold;
+}
+
+.content-box{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:20px;
+    box-shadow:0 3px 15px #0000000d;
+}
+
+.content-box h2{
+    margin-bottom:18px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.action-btn{
+    border:0;
+    padding:15px;
+    border-radius:12px;
+    background:#eff6ff;
+    color:#1d4ed8;
+    font-weight:bold;
+}
+
+.action-btn:hover{
+    background:#dbeafe;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:12px;
+    border-bottom:1px solid #eee;
+    text-align:right;
+}
+
+th{
+    background:#f8fafc;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    background:#dcfce7;
+    color:#166534;
+    font-size:12px;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:#0008;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:100;
+}
+
+.modal-box{
+    width:100%;
+    max-width:500px;
+    background:white;
+    border-radius:18px;
+    padding:25px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.close{
+    border:0;
+    background:#fee2e2;
+    color:#991b1b;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+}
+
+.toast{
+    position:fixed;
+    left:20px;
+    bottom:20px;
+    background:#111827;
+    color:white;
+    padding:13px 18px;
+    border-radius:10px;
+    z-index:300;
+    display:none;
+}
+
+@media(max-width:900px){
+
+    .sidebar{
+        width:210px;
+    }
+
+    .main{
+        margin-right:210px;
+    }
+
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+    }
+
+    .main{
+        margin-right:0;
+    }
+
+    .cards,
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .topbar{
+        flex-direction:column;
+        gap:10px;
+        align-items:flex-start;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<section id="loginPage" class="login-page">
+
+    <div class="login-box">
+
+        <div class="logo">FIT+</div>
+
+        <div class="subtitle">
+            سامانه مدیریت باشگاه بدنسازی
+        </div>
+
+        <div id="loginError" class="error"></div>
+
+        <div class="form-group">
+            <label>نام کاربری</label>
+            <input
+                id="username"
+                type="text"
+                placeholder="نام کاربری"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>رمز عبور</label>
+            <input
+                id="password"
+                type="password"
+                placeholder="رمز عبور"
+            >
+        </div>
+
+        <button
+            class="primary-btn"
+            onclick="login()"
+        >
+            ورود به سامانه
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- APP -->
+
+<section id="app" class="app hidden">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-title">
+            FIT+
+        </div>
+
+        <button class="nav-btn active"
+                onclick="showPage('dashboard',this)">
+            داشبورد
+        </button>
+
+        <button class="nav-btn"
+                onclick="showPage('members',this)">
+            اعضا
+        </button>
+
+        <button class="nav-btn"
+                onclick="showPage('attendance',this)">
+            ورود و خروج
+        </button>
+
+        <button class="nav-btn"
+                onclick="showPage('membership',this)">
+            عضویت‌ها
+        </button>
+
+        <button class="nav-btn"
+                onclick="showPage('store',this)">
+            فروشگاه
+        </button>
+
+        <button class="nav-btn"
+                onclick="showPage('finance',this)">
+            حسابداری
+        </button>
+
+        <button class="nav-btn"
+                onclick="showPage('crm',this)">
+            CRM
+        </button>
+
+        <button class="nav-btn"
+                onclick="showPage('loyalty',this)">
+            باشگاه مشتریان
+        </button>
+
+        <button class="nav-btn"
+                onclick="showPage('health',this)">
+            پرونده سلامت
+        </button>
+
+        <button class="nav-btn"
+                onclick="showPage('game',this)">
+            بازی اعضا
+        </button>
+
+        <button class="nav-btn"
+                onclick="showPage('ai',this)">
+            هوش مصنوعی
+        </button>
+
+        <button
+            class="nav-btn logout"
+            onclick="logout()"
+        >
+            خروج
+        </button>
+
+    </aside>
+
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div class="page-title" id="pageTitle">
+                داشبورد
+            </div>
+
+            <div class="user-info">
+                کاربر: <strong id="currentUser">---</strong>
+            </div>
+
+        </header>
+
+
+        <!-- DASHBOARD -->
+
+        <section id="dashboard" class="page active">
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-title">
+                        کل کاربران
+                    </div>
+                    <div class="card-number"
+                         id="statUsers">
+                        0
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        اعضا
+                    </div>
+                    <div class="card-number"
+                         id="statMembers">
+                        0
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        ورودها
+                    </div>
+                    <div class="card-number"
+                         id="statAttendance">
+                        0
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        سفارش‌ها
+                    </div>
+                    <div class="card-number"
+                         id="statOrders">
+                        0
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="content-box">
+
+                <h2>دسترسی سریع</h2>
+
+                <div class="grid">
+
+                    <button class="action-btn"
+                            onclick="showPageByName('members')">
+                        مدیریت اعضا
+                    </button>
+
+                    <button class="action-btn"
+                            onclick="showPageByName('attendance')">
+                        ثبت ورود عضو
+                    </button>
+
+                    <button class="action-btn"
+                            onclick="showPageByName('store')">
+                        فروشگاه
+                    </button>
+
+                    <button class="action-btn"
+                            onclick="showPageByName('finance')">
+                        حسابداری
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MEMBERS -->
+
+        <section id="members" class="page">
+
+            <div class="content-box">
+
+                <h2>مدیریت اعضا</h2>
+
+                <button
+                    class="primary-btn"
+                    style="width:auto;margin-bottom:20px"
+                    onclick="openModal('memberModal')"
+                >
+                    + افزودن عضو
+                </button>
+
+                <div id="membersTable">
+                    در حال دریافت اطلاعات...
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ATTENDANCE -->
+
+        <section id="attendance" class="page">
+
+            <div class="content-box">
+
+                <h2>ورود و خروج</h2>
+
+                <div class="form-group">
+
+                    <label>شناسه عضو</label>
+
+                    <input
+                        id="attendanceUserId"
+                        type="number"
+                        placeholder="مثلاً 1"
+                    >
+
+                </div>
+
+                <div class="grid">
+
+                    <button
+                        class="action-btn"
+                        onclick="checkIn()"
+                    >
+                        ثبت ورود
+                    </button>
+
+                    <button
+                        class="action-btn"
+                        onclick="checkOut()"
+                    >
+                        ثبت خروج
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MEMBERSHIP -->
+
+        <section id="membership" class="page">
+
+            <div class="content-box">
+
+                <h2>مدیریت عضویت</h2>
+
+                <button
+                    class="primary-btn"
+                    style="width:auto"
+                    onclick="openModal('membershipModal')"
+                >
+                    افزودن عضویت
+                </button>
+
+                <div
+                    id="membershipTable"
+                    style="margin-top:20px"
+                >
+                    در حال دریافت...
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- STORE -->
+
+        <section id="store" class="page">
+
+            <div class="content-box">
+
+                <h2>فروشگاه</h2>
+
+                <button
+                    class="primary-btn"
+                    style="width:auto;margin-bottom:20px"
+                    onclick="openModal('productModal')"
+                >
+                    افزودن محصول
+                </button>
+
+                <div id="productsTable">
+                    در حال دریافت...
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FINANCE -->
+
+        <section id="finance" class="page">
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-title">
+                        درآمد
+                    </div>
+
+                    <div
+                        class="card-number"
+                        id="income"
+                    >
+                        0
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        هزینه
+                    </div>
+
+                    <div
+                        class="card-number"
+                        id="expense"
+                    >
+                        0
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        موجودی
+                    </div>
+
+                    <div
+                        class="card-number"
+                        id="balance"
+                    >
+                        0
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="content-box">
+
+                <h2>تراکنش‌ها</h2>
+
+                <div id="financeTable">
+                    در حال دریافت...
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CRM -->
+
+        <section id="crm" class="page">
+
+            <div class="content-box">
+
+                <h2>CRM</h2>
+
+                <button
+                    class="primary-btn"
+                    style="width:auto;margin-bottom:20px"
+                    onclick="openModal('crmModal')"
+                >
+                    ثبت یادداشت
+                </button>
+
+                <div id="crmTable">
+                    در حال دریافت...
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LOYALTY -->
+
+        <section id="loyalty" class="page">
+
+            <div class="content-box">
+
+                <h2>باشگاه مشتریان</h2>
+
+                <p>
+                    امتیاز اعضا از طریق ورود، بازی و فعالیت‌ها
+                    قابل افزایش است.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- HEALTH -->
+
+        <section id="health" class="page">
+
+            <div class="content-box">
+
+                <h2>پرونده سلامت</h2>
+
+                <button
+                    class="primary-btn"
+                    style="width:auto"
+                    onclick="openModal('healthModal')"
+                >
+                    ثبت پرونده
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- GAME -->
+
+        <section id="game" class="page">
+
+            <div class="content-box">
+
+                <h2>بازی اعضا</h2>
+
+                <p style="margin-bottom:20px">
+                    با انجام بازی، امتیاز باشگاه مشتریان دریافت می‌شود.
+                </p>
+
+                <button
+                    class="action-btn"
+                    onclick="playGame()"
+                >
+                    شروع بازی
+                </button>
+
+                <div
+                    id="gameResult"
+                    style="margin-top:20px"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- AI -->
+
+        <section id="ai" class="page">
+
+            <div class="content-box">
+
+                <h2>دستیار هوش مصنوعی</h2>
+
+                <div class="form-group">
+
+                    <label>
+                        سؤال
+                    </label>
+
+                    <textarea
+                        id="aiQuestion"
+                        rows="5"
+                        placeholder="سؤال خود را بنویسید..."
+                    ></textarea>
+
+                </div>
+
+                <button
+                    class="primary-btn"
+                    style="width:auto"
+                    onclick="askAI()"
+                >
+                    ارسال سؤال
+                </button>
+
+                <div
+                    id="aiResult"
+                    style="margin-top:20px"
+                ></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</section>
+
+
+<!-- MEMBER MODAL -->
+
+<div
+    id="memberModal"
+    class="modal hidden"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>افزودن عضو</h2>
+
+            <button
+                class="close"
+                onclick="closeModal('memberModal')"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div class="form-group">
+            <label>نام</label>
+            <input id="memberName">
+        </div>
+
+        <div class="form-group">
+            <label>نام کاربری</label>
+            <input id="memberUsername">
+        </div>
+
+        <div class="form-group">
+            <label>رمز عبور</label>
+            <input
+                id="memberPassword"
+                type="password"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>شماره تلفن</label>
+            <input id="memberPhone">
+        </div>
+
+        <button
+            class="primary-btn"
+            onclick="createMember()"
+        >
+            ثبت عضو
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- MEMBERSHIP MODAL -->
+
+<div
+    id="membershipModal"
+    class="modal hidden"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>افزودن عضویت</h2>
+
+            <button
+                class="close"
+                onclick="closeModal('membershipModal')"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div class="form-group">
+            <label>شناسه عضو</label>
+            <input
+                id="membershipUserId"
+                type="number"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>نوع عضویت</label>
+            <input
+                id="membershipPlan"
+                placeholder="ماهانه"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>تاریخ شروع</label>
+            <input
+                id="membershipStart"
+                type="date"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>تاریخ پایان</label>
+            <input
+                id="membershipEnd"
+                type="date"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>مبلغ</label>
+            <input
+                id="membershipPrice"
+                type="number"
+            >
+        </div>
+
+        <button
+            class="primary-btn"
+            onclick="createMembership()"
+        >
+            ثبت
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- PRODUCT MODAL -->
+
+<div
+    id="productModal"
+    class="modal hidden"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>افزودن محصول</h2>
+
+            <button
+                class="close"
+                onclick="closeModal('productModal')"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div class="form-group">
+            <label>نام محصول</label>
+            <input id="productName">
+        </div>
+
+        <div class="form-gr
